@@ -1,0 +1,272 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI", "Poppins", sans-serif;
+  --pink: #f9c6d1;
+  --rose: #e86a8f;
+  --deep: #7a2d3b;
+  --cream: #fff6ef;
+  --shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.6), transparent 45%),
+    radial-gradient(circle at 80% 15%, rgba(255, 225, 230, 0.8), transparent 45%),
+    radial-gradient(circle at 25% 75%, rgba(255, 200, 214, 0.7), transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(255, 216, 228, 0.6), transparent 50%),
+    linear-gradient(135deg, #fbe4ea, #f7d4e4 45%, #f3c3de);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  color: var(--deep);
+  overflow: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  inset: -20vmax;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35) 0 18%, transparent 19%),
+    radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.3) 0 14%, transparent 15%),
+    radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.28) 0 16%, transparent 17%);
+  opacity: 0.7;
+  z-index: 0;
+}
+
+body::after {
+  transform: rotate(15deg) scale(1.2);
+  opacity: 0.5;
+}
+
+.scene {
+  width: min(900px, 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-radius: 28px;
+  padding: 40px 32px 32px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+h1 {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  color: var(--deep);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #9c4b61;
+  margin-bottom: 32px;
+}
+
+.stage {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-box {
+  position: relative;
+  width: 160px;
+  height: 140px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.6s ease;
+}
+
+.ring-box:focus-visible {
+  outline: 3px solid #f08db0;
+  outline-offset: 6px;
+}
+
+.ring-box .lid,
+.ring-box .base {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.ring-box .lid {
+  height: 60px;
+  top: 0;
+  background: linear-gradient(135deg, #f6a6be, #e2688c);
+  transform-origin: 20% 100%;
+  transition: transform 0.6s ease;
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ring-box .base {
+  height: 90px;
+  bottom: 0;
+  background: linear-gradient(135deg, #f9c7d5, #df5d83);
+  box-shadow: inset 0 6px 12px rgba(255, 255, 255, 0.5);
+}
+
+.ring-box .ring {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border: 6px solid #f7e3a0;
+  border-radius: 50%;
+  top: 45px;
+  left: 58px;
+  box-shadow: 0 0 20px rgba(255, 230, 150, 0.9);
+  opacity: 0;
+  transform: translateY(10px) scale(0.7);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.ring-box.open .lid {
+  transform: rotate(-70deg);
+}
+
+.ring-box.open .ring {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ring-box.closing .lid {
+  transform: rotate(0deg);
+}
+
+.poem {
+  position: absolute;
+  max-width: 340px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #7a2d3b;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.poem.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tulip {
+  position: absolute;
+  width: 140px;
+  height: 220px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: sway 2.5s ease-in-out infinite;
+}
+
+.tulip.visible {
+  display: flex;
+}
+
+.stem {
+  width: 12px;
+  height: 110px;
+  background: linear-gradient(180deg, #8ad46f, #4d9d59);
+  border-radius: 8px;
+}
+
+.leaf {
+  position: absolute;
+  width: 50px;
+  height: 24px;
+  background: linear-gradient(120deg, #a0e28f, #4ea96a);
+  border-radius: 50px 0 50px 0;
+  top: 110px;
+}
+
+.leaf.left {
+  left: 8px;
+  transform: rotate(-20deg);
+}
+
+.leaf.right {
+  right: 8px;
+  transform: rotate(20deg) scaleX(-1);
+}
+
+.petal {
+  position: absolute;
+  width: 60px;
+  height: 80px;
+  background: linear-gradient(150deg, #f9a8bf, #d94d74);
+  border-radius: 50% 50% 40% 40%;
+  top: 40px;
+}
+
+.petal.one {
+  left: 40px;
+  transform: rotate(-12deg);
+}
+
+.petal.two {
+  left: 0;
+  transform: rotate(-28deg);
+}
+
+.petal.three {
+  right: 0;
+  transform: rotate(28deg);
+}
+
+.action {
+  margin-top: 24px;
+  background: linear-gradient(135deg, #f59ab5, #e46a8c);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(228, 106, 140, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(228, 106, 140, 0.45);
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(2deg) translateY(-6px);
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 28px 20px 24px;
+  }
+
+  .poem {
+    max-width: 260px;
+  }
+}
